@@ -1,0 +1,71 @@
+<AKfycbwMY95___ANLNU9yH9R_bfu6EXmehQ3rvhOAbpSRoY>
+<html>
+<head>
+  <title>Parent Orientation Attendance</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 100px;
+      background: #f5f5f5;
+    }
+    .box {
+      background: white;
+      padding: 30px;
+      margin: auto;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      padding: 10px;
+      width: 90%;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Orientation Attendance</h2>
+  <form id="attendanceForm">
+    <input type="text" id="parentId" placeholder="Enter Parent ID" required />
+    <button type="submit">Mark Attendance</button>
+  </form>
+  <p id="msg"></p>
+</div>
+
+<script>
+  const form = document.getElementById('attendanceForm');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const parentId = document.getElementById('parentId').value;
+
+    fetch("https://script.google.com/macros/s/AKfycbwkccBeO54jw00RouCjQnhvbIXeHtarvnKelUSF8-g1qiYOEpD-mDb1fVvICINdB2Ie/exec", {
+      method: "POST",
+      body: JSON.stringify({ id: parentId }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('msg').innerText = "Attendance marked!";
+      form.reset();
+    })
+    .catch(err => {
+      document.getElementById('msg').innerText = "Error submitting!";
+    });
+  });
+</script>
+
+</body>
+</html>
